@@ -2,9 +2,10 @@
 A template repository for PHP libraries.
 
 ## Requirements
-* Bash
-* Git
-* Docker
+* [Bash](https://www.gnu.org/software/bash/)
+* [Git](https://git-scm.com/)
+* [direnv](https://direnv.net/)
+* [Docker](https://www.docker.com/)
 
 ## Installation
 ```console
