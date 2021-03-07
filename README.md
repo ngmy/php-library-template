@@ -24,7 +24,7 @@ laradockctl my:down
 ```
 
 And more commands:
-```
+```console
 laradockctl --help
 ```
 
