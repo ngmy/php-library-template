@@ -1,0 +1,101 @@
+name: PHP CI
+
+on: [push, pull_request]
+
+jobs:
+  install_tools:
+
+    runs-on: ubuntu-18.04
+
+    name: Install tools
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+
+      - name: Install tools
+        uses: ngmy/phive-install-action@master
+
+      - name: Upload tools to artifact store
+        uses: actions/upload-artifact@master
+        with:
+          name: tools
+          path: tools
+
+  test:
+
+    needs: install_tools
+
+    runs-on: ubuntu-18.04
+
+    strategy:
+      fail-fast: false
+      matrix:
+        php: ['7.3', '7.4', '8.0']
+        deps: [highest, lowest]
+        include:
+          - php: '7.4'
+            deps: current
+
+    name: Test (PHP ${{ matrix.php }}, ${{ matrix.deps }} dependencies)
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+
+      - name: Set up PHP ${{ matrix.php }}
+        run: sudo update-alternatives --set php /usr/bin/php${{ matrix.php }}
+
+      - name: Update Composer to latest version
+        run: sudo composer self-update
+
+      - name: Validate composer.json and composer.lock
+        run: composer validate
+
+      - name: Cache Composer packages
+        if: matrix.deps == 'current'
+        id: composer-cache
+        uses: actions/cache@v2
+        with:
+          path: vendor
+          key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-php-
+
+      - name: Install dependencies
+        run: |
+          if [[ "${{ matrix.deps }}" == 'current' && "${{ steps.composer-cache.outputs.cache-hit }}" != 'true' ]]; then
+            composer install --no-interaction
+          fi
+          if [[ "${{ matrix.deps }}" == 'highest' ]]; then
+            composer update --no-interaction
+          fi
+          if [[ "${{ matrix.deps }}" == 'lowest' ]]; then
+            composer update --no-interaction --prefer-lowest --prefer-stable
+          fi
+
+      - name: Download tools from artifact store
+        uses: actions/download-artifact@master
+        with:
+          name: tools
+          path: tools
+
+      - name: Run lint
+        run: composer lint
+
+      - name: Run bug analysis
+        run: composer findbugs
+
+      - name: Run unit tests
+        env:
+          XDEBUG_MODE: coverage
+        run: composer test
+
+      - name: Upload coverage results to Coveralls
+        env:
+          COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: nick-invision/retry@v2
+        with:
+          timeout_minutes: 10
+          max_attempts: 3
+          command: php tools/php-coveralls --coverage_clover=build/logs/clover.xml -v

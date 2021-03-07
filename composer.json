@@ -1,0 +1,51 @@
+{
+    "name": "ngmy/library",
+    "type": "library",
+    "description": "",
+    "keywords": [],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Yuta Nagamiya",
+            "email": "y.nagamiya@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^7.3|^8.0"
+    },
+    "require-dev": {
+    },
+    "autoload": {
+        "psr-4": {
+            "Ngmy\\Library\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Ngmy\\Library\\Tests\\": "tests/"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "test": [
+            "@php tools/phpunit --colors=always"
+        ],
+        "lint": [
+            "@php tools/phpcs"
+        ],
+        "findbugs": [
+            "@php tools/phpstan analyse --ansi"
+        ],
+        "fmt": [
+            "@php tools/phpcbf | exit 0",
+            "@php tools/php-cs-fixer fix --ansi"
+        ],
+        "docs": [
+            "@php tools/phpDocumentor --force"
+        ]
+    }
+}
