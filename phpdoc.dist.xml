@@ -12,7 +12,6 @@
         <api>
             <source dsn=".">
                 <path>src</path>
-                <path>vendor/ngmy/typed-array/src</path>
             </source>
         </api>
     </version>
