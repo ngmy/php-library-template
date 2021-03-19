@@ -19,3 +19,4 @@ git submodule init
 git submodule update
 
 cp .envrc.dist .envrc.local
+direnv allow .
