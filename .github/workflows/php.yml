@@ -47,7 +47,7 @@ jobs:
         run: sudo update-alternatives --set php /usr/bin/php${{ matrix.php }}
 
       - name: Install myself to test myself
-        run: ./install.sh ngmy/library-template
+        run: ./install_scripts/replace-variables.sh ngmy/library-template
 
       - name: Update Composer to latest version
         run: sudo composer self-update
