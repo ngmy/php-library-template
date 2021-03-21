@@ -50,7 +50,7 @@ jobs:
         run: sudo composer self-update
 
       - name: Install myself to test myself
-        run: ./install.sh ngmy/php-library-template
+        run: ./install.sh ngmy/library-template
 
       - name: Validate composer.json and composer.lock
         run: composer validate
