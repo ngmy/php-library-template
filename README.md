@@ -9,7 +9,7 @@ A template repository for PHP libraries.
 
 ## Installation
 ```console
-./install.sh library-name
+./install.sh vendor/project
 ```
 
 ## Development Environment
