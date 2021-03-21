@@ -19,6 +19,10 @@ git grep -Il '' | grep -v install.sh | xargs sed -i "s/{{ NGMY_COMPOSER_AUTOLOAD
 git grep -Il '' | grep -v install.sh | xargs sed -i "s/{{ NGMY_LARADOCK_CONTAINER_PREFIX }}/laradock-${DIRECTORY_NAME}/g"
 git grep -Il '' | grep -v install.sh | xargs sed -i "s/{{ NGMY_PHP_NAMESPACE_PREFIX }}/${VENDOR_NAME_PASCAL}\\\\${PACKAGE_NAME_PASCAL}/g"
 
+sed -i '/- name: Install myself to test myself/d' .github/workflows/php.yml
+sed -i '/  run: \.\/install\.sh ngmy\/library-template/{n;d;}' .github/workflows/php.yml
+sed -i '/  run: \.\/install\.sh ngmy\/library-template/d' .github/workflows/php.yml
+
 git submodule init
 git submodule update
 
