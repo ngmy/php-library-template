@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Ngmy\Library\Tests;
+namespace {{ NGMY_PHP_NAMESPACE_PREFIX }}\Tests;
 
 class ExampleTest extends TestCase
 {

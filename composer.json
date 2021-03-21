@@ -1,5 +1,5 @@
 {
-    "name": "ngmy/library",
+    "name": "{{ NGMY_COMPOSER_PACKAGE_NAME }}",
     "type": "library",
     "description": "",
     "keywords": [],
@@ -17,12 +17,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Ngmy\\Library\\": "src/"
+            "{{ NGMY_COMPOSER_AUTOLOAD_NAMESPACE_PREFIX }}": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Ngmy\\Library\\Tests\\": "tests/"
+            "{{ NGMY_COMPOSER_AUTOLOAD_NAMESPACE_PREFIX }}Tests\\": "tests/"
         }
     },
     "config": {

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Ngmy\Library;
+namespace {{ NGMY_PHP_NAMESPACE_PREFIX }};
 
 class Example
 {

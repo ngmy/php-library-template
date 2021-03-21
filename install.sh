@@ -5,17 +5,19 @@ if (( $# != 1 )); then
   exit 1
 fi
 
-LIBRARY_NAME="$1"
-LIBRARY_NAME_LOWER="${LIBRARY_NAME,,}"
-LIBRARY_NAME_PASCAL="$(echo "${LIBRARY_NAME}" | sed -r 's/(^|[_-]+)(.)/\U\2\E/g')"
+VENDOR_NAME="${1%%/*}"
+VENDOR_NAME_LOWER="${VENDOR_NAME,,}"
+VENDOR_NAME_PASCAL="$(echo "${VENDOR_NAME}" | sed -r 's/(^|[_-]+)(.)/\U\2\E/g')"
+PACKAGE_NAME="${1##*/}"
+PACKAGE_NAME_LOWER="${PACKAGE_NAME,,}"
+PACKAGE_NAME_PASCAL="$(echo "${PACKAGE_NAME}" | sed -r 's/(^|[_-]+)(.)/\U\2\E/g')"
 DIRECTORY_NAME="$(basename "$(git rev-parse --show-toplevel)")"
 
-sed -i "s/ngmy\/library/ngmy\/${LIBRARY_NAME_LOWER}/g" composer.json
-sed -i "s/Ngmy\\\\\\\\Library/Ngmy\\\\\\\\${LIBRARY_NAME_PASCAL}/g" composer.json
-sed -i "s/COMPOSE_PROJECT_NAME=laradock-library/COMPOSE_PROJECT_NAME=laradock-${DIRECTORY_NAME}/g" .laradock/env-development
-sed -i "s/laradock-library_workspace_1/laradock-${DIRECTORY_NAME}_workspace_1/g" .vim/coc-settings.json
-find src -type f -name '*.php' | xargs sed -i "s/Ngmy\\\\Library/Ngmy\\\\${LIBRARY_NAME_PASCAL}/g"
-find tests -type f -name '*.php' | xargs sed -i "s/Ngmy\\\\Library/Ngmy\\\\${LIBRARY_NAME_PASCAL}/g"
+# `git grep -Il ''` means https://stackoverflow.com/questions/18973057/how-to-list-all-text-non-binary-files-in-a-git-repository/24350112#24350112
+git grep -Il '' | grep -v install.sh | xargs sed -i "s/{{ NGMY_COMPOSER_PACKAGE_NAME }}/${VENDOR_NAME_LOWER}\/${PACKAGE_NAME_LOWER}/g"
+git grep -Il '' | grep -v install.sh | xargs sed -i "s/{{ NGMY_COMPOSER_AUTOLOAD_NAMESPACE_PREFIX }}/${VENDOR_NAME_PASCAL}\\\\\\\\${PACKAGE_NAME_PASCAL}\\\\\\\\/g"
+git grep -Il '' | grep -v install.sh | xargs sed -i "s/{{ NGMY_LARADOCK_CONTAINER_PREFIX }}/laradock-${DIRECTORY_NAME}/g"
+git grep -Il '' | grep -v install.sh | xargs sed -i "s/{{ NGMY_PHP_NAMESPACE_PREFIX }}/${VENDOR_NAME_PASCAL}\\\\${PACKAGE_NAME_PASCAL}/g"
 
 git submodule init
 git submodule update
