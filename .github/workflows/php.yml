@@ -49,6 +49,9 @@ jobs:
       - name: Update Composer to latest version
         run: sudo composer self-update
 
+      - name: Install myself to test myself
+        run: ./install.sh ngmy/php-library-template
+
       - name: Validate composer.json and composer.lock
         run: composer validate
 
