@@ -1,0 +1,14 @@
+{
+    "diagnostic-languageserver.mergeConfig": true,
+    "diagnostic-languageserver.linters": {
+        "ngmy.php-library.lint": {
+            "args": ["exec", "laradock-library_workspace_1", "composer", "lint", "--", "--report=emacs"]
+        },
+        "ngmy.php-library.findbugs": {
+            "args": ["exec", "laradock-library_workspace_1", "composer", "findbugs", "--", "--error-format", "raw", "--no-progress"]
+        }
+    },
+    "diagnostic-languageserver.filetypes": {
+        "php": ["ngmy.php-library.lint", "ngmy.php-library.findbugs"]
+    }
+}
