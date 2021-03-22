@@ -1,10 +1,10 @@
 {
     "diagnostic-languageserver.linters": {
         "ngmy.laradock.composer.lint": {
-            "args": ["exec", "{{ NGMY_LARADOCK_CONTAINER_PREFIX }}_workspace_1", "composer", "lint", "--", "--report=emacs"]
+            "args": ["exec", "-u", "laradock", "{{ NGMY_LARADOCK_CONTAINER_PREFIX }}_workspace_1", "composer", "lint", "--", "--report=emacs"]
         },
         "ngmy.laradock.composer.findbugs": {
-            "args": ["exec", "{{ NGMY_LARADOCK_CONTAINER_PREFIX }}_workspace_1", "composer", "findbugs", "--", "--error-format", "raw", "--no-progress"]
+            "args": ["exec", "-u", "laradock", "{{ NGMY_LARADOCK_CONTAINER_PREFIX }}_workspace_1", "composer", "findbugs", "--", "--error-format", "raw", "--no-progress"]
         }
     }
 }
