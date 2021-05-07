@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -Ceuo pipefail
+
 cd "$(dirname "${BASH_SOURCE[0]}")/../"
 
 if (( $# != 1 )); then
