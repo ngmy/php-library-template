@@ -23,7 +23,7 @@ git submodule update
 cp .envrc.dist .envrc.local
 direnv allow .
 
-laradockctl my:up
-laradockctl workspace:composer update --lock
+laradockctl up
+laradockctl composer update --lock
 
 rm -rf install_scripts
