@@ -13,19 +13,19 @@ A template repository for PHP libraries.
 ```
 
 ## Development Environment
-Start up my development environment:
+Start up a development environment:
 ```console
-laradockctl my:up
+laradockctl up
 ```
 
-Shut down my development environment:
+Shut down a development environment:
 ```console
-laradockctl my:down
+laradockctl down
 ```
 
 And more commands:
 ```console
-laradockctl --help
+laradockctl list
 ```
 
 ## License
